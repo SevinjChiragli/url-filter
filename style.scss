@@ -1,0 +1,8 @@
+ol{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 30px;
+    li{
+        border: solid 1px black;
+    }
+}
