@@ -224,30 +224,49 @@ const showList = (arr) => {
     ol.appendChild(li);
   });
 };
+// фильтрация по цене
+let input1 = document.getElementById("input1");
+let input2 = document.getElementById("input2");
+let btn = document.getElementById("btn").addEventListener("click", () => {
+  function changeUrl(url) {
+    const newUrl = `${window.location.pathname}?from=${input1.value}&to=${input2.value}`;
+    window.history.pushState({ path: newUrl }, "", newUrl);
+  }
+  changeUrl();
+  let url = new URLSearchParams(window.location.search);
+  let filteredArr = goods.filter(
+    (item) =>
+      item.product_price > +url.get("from") &&
+      item.product_price < +url.get("to")
+  );
+  showList(filteredArr);
+});
 
-// let input1=document.getElementById('input1')
-// let input2=document.getElementById('input2')
-// let btn=document.getElementById('btn').addEventListener('click',()=>{
-//     function changeUrl(url){
-//     const newUrl=`${window.location.pathname}?from=${input1.value}&to=${input2.value}`
-//     window.history.pushState({path:newUrl},'',newUrl)
-// }
-// changeUrl()
-// let url = new URLSearchParams(window.location.search);
-// let filteredArr=goods.filter((item)=>
-//   item.product_price> +url.get('from')  && item.product_price < +url.get('to')
-// )
-// showList(filteredArr);
-// })
+// поиск товара по названию
+document.getElementById("input3").addEventListener("input", () => {
+  function changeUrl(url) {
+    const newUrl = `${window.location.pathname}?from=${input3.value}`;
+    window.history.pushState({ path: newUrl }, "", newUrl);
+  }
+  changeUrl();
+  let url = new URLSearchParams(window.location.search);
+  let filteredArr = goods.filter(
+    (item) => item.product_name === url.get("from")
+  );
+  showList(filteredArr);
+});
 
-document.getElementById('input3').addEventListener('input',()=>{
-    function changeUrl(url){
-    const newUrl=`${window.location.pathname}?from=${input3.value}`
-    window.history.pushState({path:newUrl},'',newUrl)
-}
-changeUrl()
-let url = new URLSearchParams(window.location.search);
-let filteredArr=goods.filter((item)=>
-  item.product_name===url.get('from'))
-showList(filteredArr);
-})
+// удаление товара
+showList(goods);
+document.getElementById("input4").addEventListener("input", () => {
+  function changeUrl(url) {
+    const newUrl = `${window.location.pathname}?from=${input4.value}`;
+    window.history.pushState({ path: newUrl }, "", newUrl);
+  }
+  changeUrl();
+  let url = new URLSearchParams(window.location.search);
+  let deletedArr = goods.filter((item) => item.product_name != url.get("from"));
+  showList(deletedArr);
+});
+
+
